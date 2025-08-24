@@ -1,17 +1,14 @@
 package com.ruoyi.common.core.redis;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * spring redis 工具类
@@ -264,5 +261,23 @@ public class RedisCache
     public Collection<String> keys(final String pattern)
     {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 获取所有的缓存数据
+     * 仅适用于开发或测试环境，生产环境中 keys("*")会影响性能，阻塞Redis，数据量大时很危险。
+     *
+     * @return 所有缓存数据的 Map<key, value>
+     */
+    public Map<String, Object> getAllCache() {
+        Map<String, Object> result = new HashMap<>();
+        Set<String> keys = redisTemplate.keys("*");
+        if (keys != null) {
+            for (String key : keys) {
+                Object value = redisTemplate.opsForValue().get(key);
+                result.put(key, value);
+            }
+        }
+        return result;
     }
 }

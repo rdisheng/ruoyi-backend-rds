@@ -1,11 +1,11 @@
 package com.ruoyi.ai;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class AiTest {
+public class AiTest {
 
     @Test
-    void testAsk() {
+    public void testAsk() {
         System.out.println("hello");
     }
 }
