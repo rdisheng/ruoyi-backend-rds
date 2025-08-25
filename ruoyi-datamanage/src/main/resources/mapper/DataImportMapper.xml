@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.datamanage.mapper.DataImportMapper">
+
+    <resultMap type="DataImport" id="DataImportResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="dbName" column="db_name"/>
+        <result property="tableName" column="table_name"/>
+        <result property="importType" column="import_type"/>
+        <result property="databaseType" column="database_type"/>
+        <result property="databaseSite" column="database_site"/>
+        <result property="databaseUsername" column="database_username"/>
+        <result property="databasePossword" column="database_possword"/>
+        <result property="dbPort" column="db_port"/>
+        <result property="dataType" column="data_type"/>
+        <result property="dataSize" column="data_size"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateUserName" column="update_user_name"/>
+        <result property="copyedTableName" column="copyed_table_name"/>
+    </resultMap>
+
+    <sql id="selectDataImportVo">
+        select id,
+               name,
+               db_name,
+               table_name,
+               import_type,
+               database_type,
+               database_site,
+               database_username,
+               database_possword,
+               db_port,
+               data_type,
+               data_size,
+               remark,
+               create_time,
+               create_user,
+               create_user_name,
+               update_time,
+               update_user,
+               update_user_name,
+               copyed_table_name
+        from dm_data_import
+    </sql>
+
+    <select id="selectDataImportList" parameterType="DataImport" resultMap="DataImportResult">
+        <include refid="selectDataImportVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="dbName != null  and dbName != ''">and db_name like concat('%', #{dbName}, '%')</if>
+            <if test="tableName != null  and tableName != ''">and table_name like concat('%', #{tableName}, '%')</if>
+            <if test="importType != null ">and import_type = #{importType}</if>
+            <if test="databaseType != null  and databaseType != ''">and database_type = #{databaseType}</if>
+            <if test="databaseSite != null  and databaseSite != ''">and database_site = #{databaseSite}</if>
+            <if test="databaseUsername != null  and databaseUsername != ''">and database_username like concat('%',
+                #{databaseUsername}, '%')
+            </if>
+            <if test="databasePossword != null  and databasePossword != ''">and database_possword =
+                #{databasePossword}
+            </if>
+            <if test="dbPort != null  and dbPort != ''">and db_port = #{dbPort}</if>
+            <if test="dataType != null ">and data_type = #{dataType}</if>
+            <if test="dataSize != null ">and data_size = #{dataSize}</if>
+            <if test="createUser != null ">and create_user = #{createUser}</if>
+            <if test="createUserName != null  and createUserName != ''">and create_user_name like concat('%',
+                #{createUserName}, '%')
+            </if>
+            <if test="updateUser != null ">and update_user = #{updateUser}</if>
+            <if test="updateUserName != null  and updateUserName != ''">and update_user_name like concat('%',
+                #{updateUserName}, '%')
+            </if>
+            <if test="copyedTableName != null  and copyedTableName != ''">and copyed_table_name like concat('%',
+                #{copyedTableName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDataImportById" parameterType="Long" resultMap="DataImportResult">
+        <include refid="selectDataImportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDataImport" parameterType="DataImport">
+        insert into dm_data_import
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="dbName != null">db_name,</if>
+            <if test="tableName != null">table_name,</if>
+            <if test="importType != null">import_type,</if>
+            <if test="databaseType != null">database_type,</if>
+            <if test="databaseSite != null">database_site,</if>
+            <if test="databaseUsername != null">database_username,</if>
+            <if test="databasePossword != null">database_possword,</if>
+            <if test="dbPort != null">db_port,</if>
+            <if test="dataType != null">data_type,</if>
+            <if test="dataSize != null">data_size,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createUserName != null">create_user_name,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateUserName != null">update_user_name,</if>
+            <if test="copyedTableName != null">copyed_table_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="dbName != null">#{dbName},</if>
+            <if test="tableName != null">#{tableName},</if>
+            <if test="importType != null">#{importType},</if>
+            <if test="databaseType != null">#{databaseType},</if>
+            <if test="databaseSite != null">#{databaseSite},</if>
+            <if test="databaseUsername != null">#{databaseUsername},</if>
+            <if test="databasePossword != null">#{databasePossword},</if>
+            <if test="dbPort != null">#{dbPort},</if>
+            <if test="dataType != null">#{dataType},</if>
+            <if test="dataSize != null">#{dataSize},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createUserName != null">#{createUserName},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateUserName != null">#{updateUserName},</if>
+            <if test="copyedTableName != null">#{copyedTableName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDataImport" parameterType="DataImport">
+        update dm_data_import
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="dbName != null">db_name = #{dbName},</if>
+            <if test="tableName != null">table_name = #{tableName},</if>
+            <if test="importType != null">import_type = #{importType},</if>
+            <if test="databaseType != null">database_type = #{databaseType},</if>
+            <if test="databaseSite != null">database_site = #{databaseSite},</if>
+            <if test="databaseUsername != null">database_username = #{databaseUsername},</if>
+            <if test="databasePossword != null">database_possword = #{databasePossword},</if>
+            <if test="dbPort != null">db_port = #{dbPort},</if>
+            <if test="dataType != null">data_type = #{dataType},</if>
+            <if test="dataSize != null">data_size = #{dataSize},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserName != null">create_user_name = #{createUserName},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateUserName != null">update_user_name = #{updateUserName},</if>
+            <if test="copyedTableName != null">copyed_table_name = #{copyedTableName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDataImportById" parameterType="Long">
+        delete
+        from dm_data_import
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteDataImportByIds" parameterType="String">
+        delete from dm_data_import where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

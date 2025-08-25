@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.datamanage.mapper.DmEtlTaskNodeMapper">
+
+    <resultMap type="DmEtlTaskNode" id="DmEtlTaskNodeResult">
+        <result property="id" column="id"/>
+        <result property="nodeParam" column="node_param"/>
+        <result property="parentIds" column="parent_ids"/>
+    </resultMap>
+
+    <sql id="selectDmEtlTaskNodeVo">
+        select id, node_param, parent_ids
+        from dm_etl_task_node
+    </sql>
+
+    <select id="selectDmEtlTaskNodeList" parameterType="DmEtlTaskNode" resultMap="DmEtlTaskNodeResult">
+        <include refid="selectDmEtlTaskNodeVo"/>
+        <where>
+            <if test="nodeParam != null  and nodeParam != ''">and node_param = #{nodeParam}</if>
+            <if test="parentIds != null  and parentIds != ''">and parent_ids = #{parentIds}</if>
+        </where>
+    </select>
+
+    <select id="selectDmEtlTaskNodeById" parameterType="Long" resultMap="DmEtlTaskNodeResult">
+        <include refid="selectDmEtlTaskNodeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDmEtlTaskNode" parameterType="DmEtlTaskNode">
+        insert into dm_etl_task_node
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="nodeParam != null">node_param,</if>
+            <if test="parentIds != null">parent_ids,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="nodeParam != null">#{nodeParam},</if>
+            <if test="parentIds != null">#{parentIds},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDmEtlTaskNode" parameterType="DmEtlTaskNode">
+        update dm_etl_task_node
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nodeParam != null">node_param = #{nodeParam},</if>
+            <if test="parentIds != null">parent_ids = #{parentIds},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDmEtlTaskNodeById" parameterType="Long">
+        delete
+        from dm_etl_task_node
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteDmEtlTaskNodeByIds" parameterType="String">
+        delete from dm_etl_task_node where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
