@@ -73,6 +73,14 @@
             <artifactId>ruoyi-ai</artifactId>
             <version>${ruoyi.version}</version>
         </dependency>
+
+        <!-- datamanage模块 -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-datamanage</artifactId>
+            <version>${ruoyi.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
